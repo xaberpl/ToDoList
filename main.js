@@ -9,10 +9,10 @@ const taskNumber = document.querySelector("h1 span");
 const deleteButtons = document.getElementsByClassName("deleteButton");
 
 let tasks = [];
-let tasks2 = [];
 
 let count = 0;
 
+//RENDER FUNCTION, GENERATES ALL TASKS IM MAIN UL
 const renderTasks = () => {
   taskList.textContent = "";
   tasks.forEach((item, index) => {
@@ -23,43 +23,52 @@ const renderTasks = () => {
     taskList.appendChild(task);
     input.value = "";
   });
+
+  //CONVERTING HTML COLLECTION -> ARRAY (TO USE FOREACH)
   Array.from(deleteButtons).forEach((button) => {
     button.addEventListener("click", removeTask);
   });
 };
 
+//ADD TASK FUNCTION
 const addTask = (e) => {
   e.preventDefault();
   const titleTask = input.value;
   if (titleTask == "") {
     return;
   }
+  //PUSH NEW TASK TO ARRAY
   tasks.push(titleTask);
   count++;
+  //RENDER TASKS ALL THE TASKS
   renderTasks();
-  console.log(tasks);
 };
 addButton.addEventListener("click", addTask);
 
+//SEARCH TASK FUNCTION
 const searchTask = (e) => {
   searchList.textContent = "";
-  renderTasks();
   let searchText = e.target.value;
   if (searchText == "") {
     searchList.textContent = "";
     return;
   }
-  let tasks2 = [...liElements];
-  let tasks3 = tasks2.filter((li) => li.textContent.includes(searchText));
-  console.log(tasks3);
+  //ARRAY CONTAINING ALL TASKS
+  let arr = [...liElements];
+  //FILTERING SEARCHED TASKS
+  arr = arr.filter((li) => li.textContent.includes(searchText));
   searchList.textContent = "";
-  tasks3.forEach((li) => searchList.appendChild(li.cloneNode(true)));
+  //CLONE SEARCHED TASKS TO THE SECOND UL
+  arr.forEach((li) => searchList.appendChild(li.cloneNode(true)));
 };
-
+//SET EVENT LISTENER TO SEARCH INPUT
 inputSearch.addEventListener("input", searchTask);
+//REMOVE TASK FUNCTION
 const removeTask = (e) => {
   const index = e.target.dataset.key;
   console.log(index);
+  //REMOVING ELEMENT FROM ARRAY BY INDEX
   tasks.splice(index, 1);
+  //RENDERING TASKS
   renderTasks();
 };
