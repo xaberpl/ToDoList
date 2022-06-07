@@ -40,6 +40,7 @@ const addTask = (e) => {
   //PUSH NEW TASK TO ARRAY
   tasks.push(titleTask);
   count++;
+  taskNumber.textContent = count;
   //RENDER TASKS ALL THE TASKS
   renderTasks();
 };
@@ -66,9 +67,10 @@ inputSearch.addEventListener("input", searchTask);
 //REMOVE TASK FUNCTION
 const removeTask = (e) => {
   const index = e.target.dataset.key;
-  console.log(index);
   //REMOVING ELEMENT FROM ARRAY BY INDEX
   tasks.splice(index, 1);
   //RENDERING TASKS
   renderTasks();
+  count--;
+  taskNumber.textContent = count;
 };
